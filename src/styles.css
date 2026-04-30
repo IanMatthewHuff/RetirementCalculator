@@ -1,0 +1,87 @@
+:root {
+  font-family: system-ui, -apple-system, Segoe UI, Roboto, sans-serif;
+  color: #1f2937;
+  background: #f8fafc;
+}
+
+* { box-sizing: border-box; }
+
+body { margin: 0; }
+
+.app {
+  max-width: 960px;
+  margin: 0 auto;
+  padding: 2rem 1.25rem 4rem;
+}
+
+h1 { margin: 0 0 .25rem; }
+.subtitle { color: #6b7280; margin: 0 0 2rem; }
+
+.grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 1.5rem;
+}
+
+@media (max-width: 720px) {
+  .grid { grid-template-columns: 1fr; }
+}
+
+.card {
+  background: white;
+  border: 1px solid #e5e7eb;
+  border-radius: 12px;
+  padding: 1.25rem 1.5rem;
+  box-shadow: 0 1px 2px rgba(0,0,0,0.04);
+}
+
+.field { margin-bottom: 1rem; }
+.field label {
+  display: block;
+  font-weight: 600;
+  font-size: .9rem;
+  margin-bottom: .35rem;
+}
+.field input[type="number"] {
+  width: 100%;
+  padding: .55rem .7rem;
+  border: 1px solid #d1d5db;
+  border-radius: 8px;
+  font-size: 1rem;
+}
+.field input[type="range"] { width: 100%; }
+.field .hint { color: #6b7280; font-size: .8rem; margin-top: .25rem; }
+
+.summary {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 1rem;
+  margin-top: .5rem;
+}
+.metric {
+  background: #f1f5f9;
+  border-radius: 10px;
+  padding: .85rem 1rem;
+}
+.metric .label { font-size: .8rem; color: #475569; }
+.metric .value { font-size: 1.4rem; font-weight: 700; color: #0f172a; }
+
+.return-presets {
+  display: flex;
+  justify-content: space-between;
+  font-size: .75rem;
+  color: #6b7280;
+  margin-top: .25rem;
+}
+
+.chart-card { margin-top: 1.5rem; }
+
+.notice {
+  background: #fef3c7;
+  border: 1px solid #fde68a;
+  color: #92400e;
+  padding: .75rem 1rem;
+  border-radius: 8px;
+  margin-top: 1rem;
+  font-size: .9rem;
+}
