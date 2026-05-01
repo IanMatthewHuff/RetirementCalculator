@@ -41,6 +41,26 @@ packages/
 - If you find yourself typing `*`, `/`, `**`, or a magic financial
   constant inside a `.tsx` file, **stop** and move it to `@retirement/calc` first.
 
+## Testing rules
+
+1. **New features must ship with basic tests.**
+   - New or extended functions in `@retirement/calc` → add unit tests in
+     `packages/calc/src/index.test.ts` covering the happy path and at
+     least one edge case (zero/negative inputs, unreachable targets,
+     boundary values, etc.).
+   - New UI behavior in `@retirement/web` (new input fields, derived
+     summary tiles, conditional rendering, user interactions that
+     change displayed values) → add a test in
+     `packages/web/src/App.test.tsx` using `@testing-library/react` +
+     `userEvent` that exercises the interaction and asserts the
+     visible outcome.
+   - Tests live next to the code (`*.test.ts` / `*.test.tsx`) and must
+     pass via `npm test` from the repo root.
+
+2. **Bug fixes should add a regression test when appropriate.** If a
+   bug is fixed and can be easily verified with a test, make sure to
+   add a test along with the bug fix.
+
 ### Quick self-check before finishing a change
 
 - [ ] `packages/calc/package.json` still has no React/DOM dependencies.
@@ -50,6 +70,10 @@ packages/
       `packages/web/src/` in `.tsx` files.
 - [ ] Any new calc function has a corresponding test in
       `packages/calc/src/index.test.ts`.
+- [ ] Any new UI behavior has a corresponding test in
+      `packages/web/src/App.test.tsx`.
+- [ ] If this change fixes a bug, a regression test is included when
+      it can be easily verified with one.
 - [ ] `npm test` and `npm run build` (run from the repo root) both pass.
 
 ## Commands

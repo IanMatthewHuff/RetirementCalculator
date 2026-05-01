@@ -18,6 +18,8 @@ const RETURN_PRESETS = {
   aggressive: 0.10,
 };
 
+const DEFAULT_WITHDRAWAL_RATE = 0.04;
+
 function returnLabel(rate: number): string {
   if (rate <= 0.05) return 'Conservative';
   if (rate <= 0.085) return 'Median';
@@ -29,8 +31,12 @@ export default function App() {
   const [annualSpending, setAnnualSpending] = useState(50000);
   const [annualSavings, setAnnualSavings] = useState(20000);
   const [returnRate, setReturnRate] = useState(RETURN_PRESETS.median);
+  const [withdrawalRate, setWithdrawalRate] = useState(DEFAULT_WITHDRAWAL_RATE);
 
-  const target = useMemo(() => targetNestEgg(annualSpending), [annualSpending]);
+  const target = useMemo(
+    () => targetNestEgg(annualSpending, withdrawalRate),
+    [annualSpending, withdrawalRate]
+  );
 
   const { series, yearsToTarget } = useMemo(
     () =>
@@ -40,7 +46,7 @@ export default function App() {
         annualReturn: returnRate,
         target,
       }),
-    [currentSavings, annualSavings, returnRate, target]
+    [currentSavings, annualSavings, returnRate, annualSpending]
   );
 
   return (
@@ -75,7 +81,27 @@ export default function App() {
               onChange={(e) => setAnnualSpending(Number(e.target.value) || 0)}
             />
             <div className="hint">
-              4% rule target: <strong>{formatCurrency(target)}</strong>
+              Target nest egg: <strong>{formatCurrency(target)}</strong>
+            </div>
+          </div>
+
+          <div className="field">
+            <label htmlFor="withdrawal">
+              Withdrawal rate: {(withdrawalRate * 100).toFixed(1)}%
+            </label>
+            <input
+              id="withdrawal"
+              type="number"
+              min="2"
+              max="8"
+              step="0.1"
+              value={(withdrawalRate * 100).toFixed(1)}
+              onChange={(e) =>
+                setWithdrawalRate(Number(e.target.value) / 100 || DEFAULT_WITHDRAWAL_RATE)
+              }
+            />
+            <div className="hint">
+              The classic safe-withdrawal rule of thumb is 4%.
             </div>
           </div>
 
