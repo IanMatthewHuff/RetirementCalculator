@@ -1,12 +1,13 @@
 import { describe, it, expect, beforeAll, vi } from 'vitest';
 import { render, screen } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
+import type { ReactNode } from 'react';
 
 vi.mock('recharts', async () => {
-  const actual = await vi.importActual('recharts');
+  const actual = await vi.importActual<typeof import('recharts')>('recharts');
   return {
     ...actual,
-    ResponsiveContainer: ({ children }) => (
+    ResponsiveContainer: ({ children }: { children: ReactNode }) => (
       <div style={{ width: 600, height: 360 }}>{children}</div>
     ),
   };
@@ -14,13 +15,13 @@ vi.mock('recharts', async () => {
 
 beforeAll(() => {
   global.ResizeObserver = class {
-    observe() {}
-    unobserve() {}
-    disconnect() {}
+    observe(): void {}
+    unobserve(): void {}
+    disconnect(): void {}
   };
 });
 
-import App from './App.jsx';
+import App from './App';
 
 describe('App', () => {
   it('renders the headline and inputs', () => {

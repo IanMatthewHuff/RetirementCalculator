@@ -1,15 +1,34 @@
 // Core retirement math (the 4% rule).
 
+export interface ProjectionPoint {
+  year: number;
+  balance: number;
+  contributions: number;
+  target: number;
+}
+
+export interface ProjectBalancesInput {
+  currentSavings: number;
+  annualSavings: number;
+  annualReturn: number;
+  target: number;
+  maxYears?: number;
+}
+
+export interface ProjectBalancesResult {
+  series: ProjectionPoint[];
+  yearsToTarget: number | null;
+}
+
 // Target nest egg using the 4% safe withdrawal rate:
 // targetSpending / 0.04  ==  targetSpending * 25
-export function targetNestEgg(annualSpending, withdrawalRate = 0.04) {
+export function targetNestEgg(annualSpending: number, withdrawalRate: number = 0.04): number {
   if (annualSpending <= 0) return 0;
   return annualSpending / withdrawalRate;
 }
 
 // Project balances year-by-year, contributing `annualSavings` at the end of
 // each year and growing by `annualReturn` (e.g. 0.07 for 7%).
-// Returns an array of { year, balance, contributions, target }.
 // `maxYears` caps the projection so we don't loop forever for unreachable goals.
 export function projectBalances({
   currentSavings,
@@ -17,14 +36,14 @@ export function projectBalances({
   annualReturn,
   target,
   maxYears = 80,
-}) {
-  const series = [
+}: ProjectBalancesInput): ProjectBalancesResult {
+  const series: ProjectionPoint[] = [
     { year: 0, balance: currentSavings, contributions: currentSavings, target },
   ];
 
   let balance = currentSavings;
   let contributions = currentSavings;
-  let yearsToTarget = currentSavings >= target ? 0 : null;
+  let yearsToTarget: number | null = currentSavings >= target ? 0 : null;
 
   for (let year = 1; year <= maxYears; year++) {
     balance = balance * (1 + annualReturn) + annualSavings;
@@ -46,7 +65,7 @@ export function projectBalances({
   return { series, yearsToTarget };
 }
 
-export function formatCurrency(n) {
+export function formatCurrency(n: number): string {
   if (!isFinite(n)) return '—';
   return n.toLocaleString('en-US', {
     style: 'currency',

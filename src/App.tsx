@@ -10,7 +10,7 @@ import {
   ResponsiveContainer,
   ReferenceLine,
 } from 'recharts';
-import { targetNestEgg, projectBalances, formatCurrency } from './calc.js';
+import { targetNestEgg, projectBalances, formatCurrency } from './calc';
 
 const RETURN_PRESETS = {
   conservative: 0.04,
@@ -18,7 +18,7 @@ const RETURN_PRESETS = {
   aggressive: 0.10,
 };
 
-function returnLabel(rate) {
+function returnLabel(rate: number): string {
   if (rate <= 0.05) return 'Conservative';
   if (rate <= 0.085) return 'Median';
   return 'Aggressive';
@@ -162,12 +162,12 @@ export default function App() {
                 label={{ value: 'Years', position: 'insideBottom', offset: -5 }}
               />
               <YAxis
-                tickFormatter={(v) => `$${(v / 1000).toFixed(0)}k`}
+                tickFormatter={(v: number) => `$${(v / 1000).toFixed(0)}k`}
                 width={70}
               />
               <Tooltip
-                formatter={(v) => formatCurrency(v)}
-                labelFormatter={(l) => `Year ${l}`}
+                formatter={(v: number) => formatCurrency(v)}
+                labelFormatter={(l: number) => `Year ${l}`}
               />
               <Legend />
               <ReferenceLine
