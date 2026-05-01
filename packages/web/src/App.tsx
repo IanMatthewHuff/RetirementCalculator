@@ -10,7 +10,7 @@ import {
   ResponsiveContainer,
   ReferenceLine,
 } from 'recharts';
-import { targetNestEgg, projectBalances, formatCurrency } from './calc';
+import { targetNestEgg, projectBalances, formatCurrency } from '@retirement/calc';
 
 const RETURN_PRESETS = {
   conservative: 0.04,
@@ -155,11 +155,11 @@ export default function App() {
         <h2 style={{ marginTop: 0 }}>Projected balance over time</h2>
         <div style={{ width: '100%', height: 360 }}>
           <ResponsiveContainer>
-            <LineChart data={series} margin={{ top: 10, right: 20, bottom: 10, left: 0 }}>
+            <LineChart data={series} margin={{ top: 10, right: 60, bottom: 40, left: 0 }}>
               <CartesianGrid strokeDasharray="3 3" stroke="#e5e7eb" />
               <XAxis
                 dataKey="year"
-                label={{ value: 'Years', position: 'insideBottom', offset: -5 }}
+                label={{ value: 'Years', position: 'insideBottom', offset: -25 }}
               />
               <YAxis
                 tickFormatter={(v: number) => `$${(v / 1000).toFixed(0)}k`}
@@ -169,12 +169,12 @@ export default function App() {
                 formatter={(v: number) => formatCurrency(v)}
                 labelFormatter={(l: number) => `Year ${l}`}
               />
-              <Legend />
+              <Legend verticalAlign="bottom" wrapperStyle={{ bottom: 0 }} />
               <ReferenceLine
                 y={target}
                 stroke="#dc2626"
                 strokeDasharray="4 4"
-                label={{ value: 'Target', position: 'right', fill: '#dc2626' }}
+                label={{ value: 'Target', position: 'insideTopRight', fill: '#dc2626' }}
               />
               <Line
                 type="monotone"

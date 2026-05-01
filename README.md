@@ -9,14 +9,29 @@ A small React + Vite website for basic retirement planning using the **4% rule**
 - See your **target nest egg** (25× annual spending) and **years to retirement**.
 - Visualize the projected portfolio balance vs. total contributions over time.
 
+## Repository layout
+
+This is an npm-workspaces monorepo with two packages:
+
+```
+packages/
+  calc/   ← @retirement/calc — pure retirement math (no UI deps)
+  web/    ← @retirement/web  — the React + Vite website
+```
+
+The web app consumes the calc library as `@retirement/calc`, so the math
+could later be reused by a CLI, server, or mobile app without changes.
+
 ## Getting started
 
 ```bash
 npm install
-npm run dev      # start the dev server
-npm run build    # production build
-npm test         # run tests
+npm run dev      # start the Vite dev server (web)
+npm run build    # build calc lib, then web app
+npm test         # run tests across all packages
 ```
+
+Per-package commands also work, e.g. `npm test -w @retirement/calc`.
 
 ## Open in VS Code
 

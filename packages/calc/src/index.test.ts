@@ -1,5 +1,5 @@
 import { describe, it, expect } from 'vitest';
-import { targetNestEgg, projectBalances, formatCurrency } from './calc';
+import { targetNestEgg, projectBalances, formatCurrency } from './index';
 
 describe('targetNestEgg (4% rule)', () => {
   it('returns 25x annual spending', () => {
